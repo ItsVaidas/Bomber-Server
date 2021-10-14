@@ -7,17 +7,19 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Random;
 
-import OSP.ServerSide.PlayerData;
+import OSP.ServerSide.Engine.Lobby;
 
 public class AcceptFromMultiClients extends Thread {
-	
+
+	private Lobby lobby;
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
     private Random rand = new Random();
 
-    public AcceptFromMultiClients(Socket socket) {
+    public AcceptFromMultiClients(Socket socket, Lobby lobby) {
         this.clientSocket = socket;
+        this.lobby = lobby;
     }
 
     public void run() {
@@ -36,12 +38,40 @@ public class AcceptFromMultiClients extends Thread {
 					break;
 				}
 				case 1: {
-					int ID = Integer.parseInt(in.readLine());
-					PlayerData.updateUser(ID);
+					String ID = in.readLine();
+					lobby.keepAlive(ID);
 					break;
 				}
 				case 2: {
 					updateInformation();
+					break;
+				}
+				case 3: {
+					sendFirstInformation();
+					break;
+				}
+				case 10: {
+					getPlayerPositions();
+					break;
+				}
+				case 11: {
+					updatePlayerPosition();
+					break;
+				}
+				case 12: {
+					getBombs();
+					break;
+				}
+				case 13: {
+					placeBomb();
+					break;
+				}
+				case 14: {
+					updateMap();
+					break;
+				}
+				case 20: {
+					updateEnd();
 					break;
 				}
 				default:
@@ -56,25 +86,85 @@ public class AcceptFromMultiClients extends Thread {
 		}
     }
     
-    private void updateInformation() throws IOException {
-		//int ID = Integer.parseInt(in.readLine());
-		if (PlayerData.getUsers().size() == 1) {
-			out.println(0); // Waiting for players
+    private void updateEnd() throws IOException {
+		String ID = in.readLine();
+		if (lobby.containsPlayer(ID)) {
+			out.println(lobby.hasGameStarted());
 		}
-		if (PlayerData.getUsers().size() > 1) {
-			out.println(1); // Strting match and waiting for players
-			out.println(30);
-			out.println(PlayerData.getUsers().size());
+	}
+
+	private void updateMap() throws IOException {
+		String ID = in.readLine();
+		if (lobby.containsPlayer(ID) && lobby.hasGameStarted()) {
+			out.println(lobby.getGame().getMap());
+		}
+	}
+
+	private void getBombs() throws IOException {
+		String ID = in.readLine();
+		if (lobby.containsPlayer(ID) && lobby.hasGameStarted()) {
+			out.println(lobby.getGame().getBombStatus());
+		}
+	}
+
+	private void placeBomb() throws IOException {
+		String ID = in.readLine();
+		if (lobby.containsPlayer(ID) && lobby.hasGameStarted()) {
+			int x = Integer.valueOf(in.readLine());
+			int y = Integer.valueOf(in.readLine());
+			lobby.getGame().addBomb(ID, x, y);
+		}
+	}
+
+	private void updatePlayerPosition() throws IOException {
+		String ID = in.readLine();
+		if (lobby.containsPlayer(ID) && lobby.hasGameStarted()) {
+			int x = Integer.valueOf(in.readLine());
+			int y = Integer.valueOf(in.readLine());
+			lobby.getPlayer(ID).getLocation().setLocation(x, y);;
+		}
+	}
+
+	private void getPlayerPositions() throws IOException {
+		String ID = in.readLine();
+		if (lobby.containsPlayer(ID) && lobby.hasGameStarted()) {
+			out.println(lobby.getGame().getPlayerStatus());
+		}
+	}
+
+	private void sendFirstInformation() throws IOException {
+		String ID = in.readLine();
+		if (lobby.containsPlayer(ID) && lobby.hasGameStarted()) {
+			out.println(3);
+			out.println(lobby.getGame().getMap());
+			out.println(lobby.getGame().getPlayerStatus());
+		}
+	}
+
+	private void updateInformation() throws IOException {
+		String ID = in.readLine();
+		if (lobby.containsPlayer(ID)) {
+			if (lobby.getPlayers().size() == 1) {
+				out.println(0); // Waiting for players
+			}
+			if (lobby.getPlayers().size() > 1 && !lobby.hasGameStarted()) {
+				out.println(1); // Strting match and waiting for players
+				out.println(lobby.getCountDown());
+				out.println(lobby.getPlayers().size());
+			}
+			if (lobby.hasGameStarted()) {
+				out.println(2);
+			}
 		}
 	}
 
 	private void newUserJoined() {
-		if (PlayerData.getUsers().size() == 4) {
+		if (lobby.getPlayers().size() == 4) {
 			System.out.println("User was unable to join because the server is full; IP: " + this.clientSocket.getInetAddress().getHostAddress());
 			return;
 		}
 		int ID = rand.nextInt(9000) + 1000;
-		PlayerData.addUser(ID);
+		lobby.addPlayer(String.valueOf(ID));
 		out.println(ID);
 		System.out.println("User joined with ID: " + ID + "; IP: " + this.clientSocket.getInetAddress().getHostAddress());
     }
