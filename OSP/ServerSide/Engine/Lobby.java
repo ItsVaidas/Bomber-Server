@@ -50,8 +50,10 @@ public class Lobby {
 	}
 	
 	private void startGame() {
-		if (countdown != null)
+		if (countdown != null) {
 			countdown.stop();
+			countdown = null;
+		}
 		game = new Game(this);
 	}
 

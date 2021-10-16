@@ -89,6 +89,7 @@ public class AcceptFromMultiClients extends Thread {
     private void updateEnd() throws IOException {
 		String ID = in.readLine();
 		if (lobby.containsPlayer(ID)) {
+			lobby.keepAlive(ID);
 			out.println(lobby.hasGameStarted());
 		}
 	}
@@ -96,6 +97,7 @@ public class AcceptFromMultiClients extends Thread {
 	private void updateMap() throws IOException {
 		String ID = in.readLine();
 		if (lobby.containsPlayer(ID) && lobby.hasGameStarted()) {
+			lobby.keepAlive(ID);
 			out.println(lobby.getGame().getMap());
 		}
 	}
@@ -103,6 +105,7 @@ public class AcceptFromMultiClients extends Thread {
 	private void getBombs() throws IOException {
 		String ID = in.readLine();
 		if (lobby.containsPlayer(ID) && lobby.hasGameStarted()) {
+			lobby.keepAlive(ID);
 			out.println(lobby.getGame().getBombStatus());
 		}
 	}
@@ -110,6 +113,7 @@ public class AcceptFromMultiClients extends Thread {
 	private void placeBomb() throws IOException {
 		String ID = in.readLine();
 		if (lobby.containsPlayer(ID) && lobby.hasGameStarted()) {
+			lobby.keepAlive(ID);
 			int x = Integer.valueOf(in.readLine());
 			int y = Integer.valueOf(in.readLine());
 			lobby.getGame().addBomb(ID, x, y);
@@ -119,6 +123,7 @@ public class AcceptFromMultiClients extends Thread {
 	private void updatePlayerPosition() throws IOException {
 		String ID = in.readLine();
 		if (lobby.containsPlayer(ID) && lobby.hasGameStarted()) {
+			lobby.keepAlive(ID);
 			int x = Integer.valueOf(in.readLine());
 			int y = Integer.valueOf(in.readLine());
 			lobby.getPlayer(ID).getLocation().setLocation(x, y);;
@@ -128,6 +133,7 @@ public class AcceptFromMultiClients extends Thread {
 	private void getPlayerPositions() throws IOException {
 		String ID = in.readLine();
 		if (lobby.containsPlayer(ID) && lobby.hasGameStarted()) {
+			lobby.keepAlive(ID);
 			out.println(lobby.getGame().getPlayerStatus());
 		}
 	}
@@ -135,6 +141,7 @@ public class AcceptFromMultiClients extends Thread {
 	private void sendFirstInformation() throws IOException {
 		String ID = in.readLine();
 		if (lobby.containsPlayer(ID) && lobby.hasGameStarted()) {
+			lobby.keepAlive(ID);
 			out.println(3);
 			out.println(lobby.getGame().getMap());
 			out.println(lobby.getGame().getPlayerStatus());

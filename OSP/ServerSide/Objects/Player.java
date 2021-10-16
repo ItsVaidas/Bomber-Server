@@ -32,7 +32,7 @@ public class Player {
 	}
 
 	public void keepAlive() {
-		this.timeout = System.currentTimeMillis() + 100;
+		this.timeout = System.currentTimeMillis() + 1000;
 	}
 
 	public Location getLocation() {
