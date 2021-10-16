@@ -38,7 +38,8 @@ public class Lobby {
 	}
 
 	private void startCountdown() {
-		secondsTillStart = 5;
+		if (countdown != null) return;
+		secondsTillStart = 30;
 		countdown = new Timer(1000, (e) -> {
 			secondsTillStart--;
 			if (secondsTillStart == 0) {
@@ -66,8 +67,10 @@ public class Lobby {
 			if (p.getID().equals(ID))
 				players.remove(p);
 		if (getPlayers().size() <= 1) {
-			if (countdown != null)
+			if (countdown != null) {
 				countdown.stop();
+				countdown = null;
+			}
 			secondsTillStart = 30;
 		}
 	}
