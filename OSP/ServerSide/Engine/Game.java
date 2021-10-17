@@ -17,8 +17,8 @@ public class Game {
 	Map map;
 	List<Bomb> bombs;
 	List<int[]> initialLocations = Arrays.asList(new int[] {1, 1}, new int[] {1, 8}, new int[] {8, 1}, new int[] {8, 8});
-	
-	public Game(Lobby lobby) {
+	private static Game gameInstance = null;
+	private Game(Lobby lobby) {
 		this.lobby = lobby;
 		this.map = new Map(this);
 		bombs = new ArrayList<>();
@@ -32,7 +32,14 @@ public class Game {
 		
 		explodeBombs();
 	}
-
+	
+	public synchronized static Game getGameInstance(Lobby lobby) {
+		if(gameInstance==null) {
+			gameInstance = new Game(lobby);
+		}
+		return gameInstance;
+	}
+	
 	public void addBomb(String ID, int x, int y) {
 		bombs.add(new Bomb(lobby.getPlayer(ID), new Location(x, y)));
 	}

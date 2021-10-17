@@ -54,7 +54,7 @@ public class Lobby {
 			countdown.stop();
 			countdown = null;
 		}
-		game = new Game(this);
+		game = Game.getGameInstance(this);
 	}
 
 	public void addPlayer(String ID) {
