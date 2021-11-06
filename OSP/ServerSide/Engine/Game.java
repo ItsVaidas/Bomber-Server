@@ -16,6 +16,7 @@ public class Game {
 	Lobby lobby;
 	Map map;
 	List<Bomb> bombs;
+	public int aa = 0;
 	List<int[]> initialLocations = Arrays.asList(new int[] {1, 1}, new int[] {1, 8}, new int[] {8, 1}, new int[] {8, 8});
 	private static Game gameInstance = null;
 	private Game(Lobby lobby) {
@@ -44,13 +45,22 @@ public class Game {
 		bombs.add(new Bomb(lobby.getPlayer(ID), new Location(x, y)));
 	}
 
+	public void removeBomb(String ID, int x, int y) {
+		for (Bomb b : getBombs()) {
+			if(b.removeB()) {
+				//this.bombs.clear();
+			}
+		}
+		this.bombs.clear();
+		//System.out.println("removed");
+	}
 	public List<Bomb> getBombs() {
 		return new ArrayList<>(bombs);
 	}
 
 	private void explodeBombs() {
-		new Timer(50, (e) -> {
-			for (Bomb b : getBombs()) {
+		new Timer(50, (e) -> {     
+			for (Bomb b : getBombs()) {     
 				if (b.isExploded()) {
 					map.doExplosionToBlocks(b);
 					this.bombs.remove(b);

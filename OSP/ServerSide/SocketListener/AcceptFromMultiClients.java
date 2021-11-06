@@ -66,6 +66,10 @@ public class AcceptFromMultiClients extends Thread {
 					placeBomb();
 					break;
 				}
+				case 70: {
+					removeBomb();
+					break;
+				}
 				case 14: {
 					updateMap();
 					break;
@@ -117,6 +121,15 @@ public class AcceptFromMultiClients extends Thread {
 			int x = Integer.valueOf(in.readLine());
 			int y = Integer.valueOf(in.readLine());
 			lobby.getGame().addBomb(ID, x, y);
+		}
+	}
+	private void removeBomb() throws IOException {
+		String ID = in.readLine();
+		if (lobby.containsPlayer(ID) && lobby.hasGameStarted()) {
+			lobby.keepAlive(ID);
+			int x = Integer.valueOf(in.readLine());
+			int y = Integer.valueOf(in.readLine());
+			lobby.getGame().removeBomb(ID, x, y);
 		}
 	}
 

@@ -39,7 +39,7 @@ public class Lobby {
 
 	private void startCountdown() {
 		if (countdown != null) return;
-		secondsTillStart = 30;
+		secondsTillStart = 6;   // 30
 		countdown = new Timer(1000, (e) -> {
 			secondsTillStart--;
 			if (secondsTillStart == 0) {
