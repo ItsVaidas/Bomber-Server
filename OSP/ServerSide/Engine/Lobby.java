@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.Timer;
 
 import OSP.ServerSide.Objects.Player;
+import OSP.ServerSide.Objects.PowerUp;
 
 public class Lobby {
 	

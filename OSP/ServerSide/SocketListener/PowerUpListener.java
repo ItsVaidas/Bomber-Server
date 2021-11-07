@@ -7,7 +7,7 @@ import java.net.Socket;
 
 import OSP.ServerSide.Engine.Lobby;
 
-public class FirstInformationListener extends EventListener {
+public class PowerUpListener extends EventListener {
 	@Override
 	public void update(
 			int channel,
@@ -16,18 +16,12 @@ public class FirstInformationListener extends EventListener {
 			BufferedReader in,
 			Socket clientSocket
 	) throws IOException {
-		if(channel == 3) {
+		if(channel == 15) {
 			String ID = in.readLine();
 			if (lobby.containsPlayer(ID) && lobby.hasGameStarted()) {
 				lobby.keepAlive(ID);
-				out.println(3);
-				out.println(lobby.getGame().getMap());
-				out.println(lobby.getGame().getPlayerStatus());
 				out.println(lobby.getGame().getPowerUpsToString());
-			}
+			};
 		}
 	}
 }
-
-
-

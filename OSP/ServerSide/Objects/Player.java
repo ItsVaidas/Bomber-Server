@@ -6,6 +6,7 @@ public class Player {
 	long timeout;
 	Location l;
 	boolean isDead;
+	int health = 1;
 	
 	public Player(String ID) {
 		this.ID = ID;
@@ -20,7 +21,14 @@ public class Player {
 	}
 	
 	public void died() {
-		isDead = true;
+		health--;
+		if(health == 1) {
+			isDead = true;	
+		}
+	}
+	
+	public void addHealth(int health) {
+		this.health += health;
 	}
 
 	public String getID() {

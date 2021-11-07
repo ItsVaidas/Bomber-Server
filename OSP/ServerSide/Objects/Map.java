@@ -32,8 +32,20 @@ public class Map {
 		}
 		for (int y = 1; y < HEIGHT - 1; y++)
 			for (int x = 1; x < HEIGHT - 1; x++) {
-				map[y][x] = r.nextInt(3);
+				int random = r.nextInt(3);
+				if(random == 2) {
+					random = 1;
+				}
+				map[y][x] = random;	
 			}
+	}
+	
+	public int getHeight() {
+		return this.HEIGHT;
+	}
+	
+	public int getWidth() {
+		return this.WIDTH;
 	}
 
 	private void generateSpawnZones() {
