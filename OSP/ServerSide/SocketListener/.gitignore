@@ -1,2 +1,16 @@
 /AcceptFromMultiClients.class
 /TCPPortListener.class
+/BombListener.class
+/BombPlacerListener.class
+/ConnectionListener.class
+/EventListener.class
+/FirstInformationListener.class
+/GameEndListener.class
+/InformationListener.class
+/LobbyStatusListener.class
+/MapUpdaterListener.class
+/NewUserListener.class
+/PlayerPositionListener.class
+/PlayerPositionUpdateListener.class
+/UserRequestObserver.class
+/removeBombListener.class
