@@ -46,6 +46,10 @@ public class Player {
 		this.power += power;
 	}
 	
+	public int getHealt() {
+		return this.health;
+	}
+	
 	public void removeHealth(int health) {
 		this.health -= health;
 		if(this.health == 0) {
