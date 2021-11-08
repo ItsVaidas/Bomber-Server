@@ -50,9 +50,23 @@ public class Player {
 		return this.health;
 	}
 	
+	public int getPower() {
+		return this.power;
+	}
+	
+	public int getSpeed() {
+		return this.speed;
+	}
+	
+	public int getDamage() {
+		return this.damage;
+	}
+	
+	
+	
 	public void removeHealth(int health) {
 		this.health -= health;
-		if(this.health == 0) {
+		if(this.health <= 0) {
 			this.died();
 		}
 	}

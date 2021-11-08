@@ -21,6 +21,10 @@ import OSP.ServerSide.Objects.PowerUp;
 import OSP.ServerSide.Objects.SpeedPoition;
 import OSP.ServerSide.Objects.SpeedPowerUpAlgorithm;
 import OSP.ServerSide.Objects.Sword;
+import OSP.ServerSide.Objects.HealthPowerUpDecorator;
+import OSP.ServerSide.Objects.SpeedPowerUpDecorator;
+import OSP.ServerSide.Objects.DamagePowerUpDecorator;
+
 
 public class Game {
 
@@ -160,7 +164,11 @@ public class Game {
 		
 		for (Player p : getPlayers()) {
 			if (p.getLocation().X() == x && p.getLocation().Y() == y) {
+				Player healthDecorator = new HealthPowerUpDecorator(p);
+				Player speedAndHealthDecorator = new SpeedPowerUpDecorator(healthDecorator);
+				Player mainDecorator = new DamagePowerUpDecorator(speedAndHealthDecorator);
 				powerUp.executePowerUpAlgorithm(p);
+				System.out.println("User(ID:"+p.getID()+") health:" + mainDecorator.getHealth() + " speed:" + mainDecorator.getSpeed()+ " damage:"+ mainDecorator.getDamage());
 				itr.remove();
 			}	
 		}

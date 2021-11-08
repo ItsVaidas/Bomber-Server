@@ -13,3 +13,5 @@
 /PoisonPowerUpAlgorithm.class
 /SpeedPowerUpAlgorithm.class
 /DamagePowerUpAlgorithm.class
+/SpeedPowerUpDecorator.class
+/DamagePowerUpDecorator.class

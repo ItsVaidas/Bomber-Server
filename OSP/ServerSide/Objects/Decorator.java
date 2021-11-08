@@ -17,4 +17,15 @@ public class Decorator extends Player {
 		return player.getHealth();
 	}
 	
+	public int getPower() {
+		return player.getPower();
+	}
+	
+	public int getSpeed() {
+		return player.getSpeed();
+	}
+	
+	public int getDamage() {
+		return player.getDamage();
+	}
 }
