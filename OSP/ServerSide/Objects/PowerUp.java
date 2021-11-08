@@ -7,6 +7,7 @@ public class PowerUp {
 	
 	public PowerUp(Location l, int type) {
 		this.l = l;
+		this.type = type;
 	}
 	
 	public Location getLocation() {
@@ -23,6 +24,6 @@ public class PowerUp {
 
 	@Override
 	public String toString() {
-		return l.X()+"/"+l.Y();
+		return l.X()+"/"+l.Y()+" "+type;
 	}
 }
