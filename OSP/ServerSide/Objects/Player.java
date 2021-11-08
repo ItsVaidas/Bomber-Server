@@ -7,6 +7,9 @@ public class Player {
 	Location l;
 	boolean isDead;
 	int health = 1;
+	int power = 1;
+	int speed = 1;
+	int damage = 1;
 	
 	public Player(String ID) {
 		this.ID = ID;
@@ -27,8 +30,27 @@ public class Player {
 		}
 	}
 	
+	public void addDamage(int damage) {
+		this.damage += damage;
+	}
+	
+	public void addSpeed(int speed) {
+		this.speed += speed;
+	}
+	
 	public void addHealth(int health) {
 		this.health += health;
+	}
+	
+	public void addPower(int power) {
+		this.power += power;
+	}
+	
+	public void removeHealth(int health) {
+		this.health -= health;
+		if(this.health == 0) {
+			this.died();
+		}
 	}
 
 	public String getID() {
