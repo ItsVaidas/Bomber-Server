@@ -46,7 +46,7 @@ public class Player {
 		this.power += power;
 	}
 	
-	public int getHealt() {
+	public int getHealth() {
 		return this.health;
 	}
 	
