@@ -2,7 +2,7 @@
 /Location.class
 /Map.class
 /Player.class
-/Creator.class
+<<<<<<< HEAD
 /Fruit.class
 /HealthPowerUpAlgorithm.class
 /PowerUp.class
@@ -16,3 +16,6 @@
 /DamagePowerUpAlgorithm.class
 /SpeedPowerUpDecorator.class
 /DamagePowerUpDecorator.class
+=======
+/Creator.class
+>>>>>>> 1d48073 (.gitignore)
