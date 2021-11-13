@@ -15,3 +15,4 @@
 /UserRequestObserver.class
 /removeBombListener.class
 /PowerUpListener.class
+/TCPPortListenerFacade.class

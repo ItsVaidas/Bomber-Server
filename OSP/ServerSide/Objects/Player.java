@@ -11,6 +11,10 @@ public class Player {
 	int speed = 1;
 	int damage = 1;
 	
+	public Player() {
+		
+	}
+	
 	public Player(String ID) {
 		this.ID = ID;
 		this.timeout = System.currentTimeMillis() + 100;

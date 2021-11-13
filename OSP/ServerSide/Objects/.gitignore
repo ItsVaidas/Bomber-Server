@@ -16,3 +16,5 @@
 /DamagePowerUpAlgorithm.class
 /SpeedPowerUpDecorator.class
 /DamagePowerUpDecorator.class
+/Decorator.class
+/HealthPowerUpDecorator.class

@@ -7,13 +7,20 @@ import javax.swing.Timer;
 import OSP.ServerSide.Engine.Lobby;
 import OSP.ServerSide.Objects.Player;
 
-public class TCPPortListener {
+public class TCPPortListenerFacade {
 	
 	Lobby lobby;
+	Player player;
 	
-	public TCPPortListener(Lobby lobby) {
+	public TCPPortListenerFacade(Lobby lobby, Player player) {
 		this.lobby = lobby;
+		this.player = player;
 	}
+	
+	public Lobby getLobbyT() {
+        return lobby;
+    }
+	
 	
     private ServerSocket serverSocket;
 
