@@ -18,3 +18,7 @@
 /DamagePowerUpDecorator.class
 /Decorator.class
 /HealthPowerUpDecorator.class
+/MapBuilder.class
+/IBuilder.class
+/Map2.class
+/Director.class

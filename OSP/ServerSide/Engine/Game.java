@@ -14,6 +14,7 @@ import OSP.ServerSide.Objects.Fruit;
 import OSP.ServerSide.Objects.HealthPowerUpAlgorithm;
 import OSP.ServerSide.Objects.Location;
 import OSP.ServerSide.Objects.Map;
+import OSP.ServerSide.Objects.MapBuilder;
 import OSP.ServerSide.Objects.Player;
 import OSP.ServerSide.Objects.Poison;
 import OSP.ServerSide.Objects.PoisonPowerUpAlgorithm;
@@ -24,6 +25,7 @@ import OSP.ServerSide.Objects.Sword;
 import OSP.ServerSide.Objects.HealthPowerUpDecorator;
 import OSP.ServerSide.Objects.SpeedPowerUpDecorator;
 import OSP.ServerSide.Objects.DamagePowerUpDecorator;
+import OSP.ServerSide.Objects.Director;
 
 
 public class Game {
@@ -32,12 +34,15 @@ public class Game {
 	Map map;
 	List<Bomb> bombs;
 	List<PowerUp> powerUps;
-	public int aa = 0;
 	List<int[]> initialLocations = Arrays.asList(new int[] {1, 1}, new int[] {1, 8}, new int[] {8, 1}, new int[] {8, 8});
+	
 	private static Game gameInstance = null;
 	private Game(Lobby lobby) {
 		this.lobby = lobby;
-		this.map = new Map(this);
+		
+		Director director = new Director();
+		this.map = director.createMap(new MapBuilder());
+		
 		bombs = new ArrayList<>();
 		powerUps = new ArrayList<>();
 		
@@ -142,7 +147,8 @@ public class Game {
 		new Timer(50, (e) -> {     
 			for (Bomb b : getBombs()) {     
 				if (b.isExploded()) {
-					map.doExplosionToBlocks(b);
+					System.out.println("Explosion");
+					map.doExplosionToBlocks(b, this);
 					this.bombs.remove(b);
 				}
 			}
