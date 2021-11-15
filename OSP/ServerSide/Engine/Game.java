@@ -148,7 +148,7 @@ public class Game {
 			for (Bomb b : getBombs()) {     
 				if (b.isExploded()) {
 					System.out.println("Explosion");
-					map.doExplosionToBlocks(b, this);
+					map.doExplosionToBlocks(b, this.getPlayers());
 					this.bombs.remove(b);
 				}
 			}
