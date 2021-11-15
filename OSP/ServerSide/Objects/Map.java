@@ -1,5 +1,7 @@
 package OSP.ServerSide.Objects;
 
+import java.util.List;
+
 import OSP.ServerSide.Engine.Game;
 
 public class Map {
@@ -39,7 +41,7 @@ public class Map {
 		return builder.toString();
 	}
 	
-	public void doExplosionToBlocks(Bomb b, Game game) {
+	public void doExplosionToBlocks(Bomb b, List<Player> players) {
 		int x = b.getLocation().X();
 		int y = b.getLocation().Y();
 		
@@ -49,14 +51,14 @@ public class Map {
 		for (int i = y - from < 0 ? 0 : y - from; i <= y + to && i < this.height; i++) {
 			if (map[i][x] == 1)
 				map[i][x] = 0;
-			for (Player p : game.getPlayers())
+			for (Player p : players)
 				if (p.getLocation().X() == x && p.getLocation().Y() == i)
 					p.died();
 		}
 		for (int j = x - from < 0 ? 0 : x - from; j <= x + to && j < this.width; j++) {
 			if (map[y][j] == 1)
 				map[y][j] = 0;
-			for (Player p : game.getPlayers())
+			for (Player p : players)
 				if (p.getLocation().X() == j && p.getLocation().Y() == y)
 					p.died();
 		}

@@ -29,7 +29,7 @@ public class Player {
 	
 	public void died() {
 		health--;
-		if(health == 1) {
+		if(health == 0) {
 			isDead = true;	
 		}
 	}
