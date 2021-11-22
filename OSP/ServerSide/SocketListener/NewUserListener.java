@@ -24,8 +24,8 @@ public class NewUserListener extends EventListener {
 				System.out.println("User was unable to join because the server is full; IP: " + clientSocket.getInetAddress().getHostAddress());
 				return;
 			}
-			int ID = rand.nextInt(9000) + 1000;
-			lobby.addPlayer(String.valueOf(ID));
+			int ID = lobby.getPlayers().size() + 1;
+			lobby.addPlayer(String.valueOf(ID), ID == 1 ? 1 : 0);
 			out.println(ID);
 			System.out.println("User joined with ID: " + ID + "; IP: " + clientSocket.getInetAddress().getHostAddress());
 		}

@@ -11,25 +11,8 @@ import Collections.PowerUpCollection;
 
 import java.util.Iterator;
 
-import OSP.ServerSide.Objects.Bomb;
-import OSP.ServerSide.Objects.DamagePowerUpAlgorithm;
-import OSP.ServerSide.Objects.Fruit;
-import OSP.ServerSide.Objects.HealthPowerUpAlgorithm;
-import OSP.ServerSide.Objects.Location;
-import OSP.ServerSide.Objects.Map;
-import OSP.ServerSide.Objects.MapBuilder;
-import OSP.ServerSide.Objects.Player;
-import OSP.ServerSide.Objects.Poison;
-import OSP.ServerSide.Objects.PoisonPowerUpAlgorithm;
-import OSP.ServerSide.Objects.PowerUp;
-import OSP.ServerSide.Objects.PowerUpIterator;
-import OSP.ServerSide.Objects.SpeedPoition;
-import OSP.ServerSide.Objects.SpeedPowerUpAlgorithm;
-import OSP.ServerSide.Objects.Sword;
-import OSP.ServerSide.Objects.HealthPowerUpDecorator;
-import OSP.ServerSide.Objects.SpeedPowerUpDecorator;
-import OSP.ServerSide.Objects.DamagePowerUpDecorator;
-import OSP.ServerSide.Objects.Director;
+import OSP.ServerSide.Objects.*;
+import Services.*;
 
 
 public class Game {
@@ -57,8 +40,17 @@ public class Game {
 		}
 		
 		explodeBombs();
-		checkPowerUps();
 		addPowerUps();
+		checkPowerUps();
+	}
+	
+	public void checkPowerUps() {
+		new Timer(50, (e) -> {			
+			for(Iterator<PowerUp> itr = this.powerUps.iterator(); itr.hasNext();) {
+				PowerUp p = itr.next();
+				new PlayerLevelServiceProxy(new PowerUpCheckService(), 1).checkPowerUp(p, itr, getPlayers());
+			}
+		}).start();
 	}
 	
 	private void addPowerUps() {
@@ -111,31 +103,6 @@ public class Game {
 				}
 			}
 		}).start();
-	}
-	
-	private void checkPowerUps() {
-		new Timer(50, (e) -> {			
-			for(Iterator<PowerUp> itr = this.powerUps.iterator(); itr.hasNext();) {
-				PowerUp p = itr.next();
-				checkPowerUp(p, itr);
-			}
-		}).start();
-	}
-	
-	public void checkPowerUp(PowerUp powerUp, Iterator<PowerUp> itr) {
-		int x = powerUp.getLocation().X();
-		int y = powerUp.getLocation().Y();	
-		
-		for (Player p : getPlayers()) {
-			if (p.getLocation().X() == x && p.getLocation().Y() == y) {
-				Player healthDecorator = new HealthPowerUpDecorator(p);
-				Player speedAndHealthDecorator = new SpeedPowerUpDecorator(healthDecorator);
-				Player mainDecorator = new DamagePowerUpDecorator(speedAndHealthDecorator);
-				powerUp.executePowerUpAlgorithm(p);
-				System.out.println("User(ID:"+p.getID()+") health:" + mainDecorator.getHealth() + " speed:" + mainDecorator.getSpeed()+ " damage:"+ mainDecorator.getDamage());
-				itr.remove();
-			}	
-		}
 	}
 
 	public String getMap() {

@@ -58,8 +58,8 @@ public class Lobby {
 		game = Game.getGameInstance(this);
 	}
 
-	public void addPlayer(String ID) {
-		players.add(new Player(ID));
+	public void addPlayer(String ID, int level) {
+		players.add(new Player(ID, level));
 		if (getPlayers().size() >= 2) {
 			startCountdown();
 		}

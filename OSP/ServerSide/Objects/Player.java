@@ -10,14 +10,16 @@ public class Player {
 	int power = 1;
 	int speed = 1;
 	int damage = 1;
+	int level = 1;
 	
 	public Player() {
 		
 	}
 	
-	public Player(String ID) {
+	public Player(String ID, int level) {
 		this.ID = ID;
 		this.timeout = System.currentTimeMillis() + 100;
+		this.level = level;
 		isDead = false;
 		
 		l = new Location();
@@ -25,6 +27,10 @@ public class Player {
 
 	public boolean isDead() {
 		return isDead;
+	}
+	
+	public int getLevel() {
+		return this.level;
 	}
 	
 	public void died() {
