@@ -7,7 +7,7 @@ public class Decorator extends Player {
 	
 	public Decorator( Player component )
 	{
-		super(component.getID());
+		super(component.getID(), component.getLevel());
 		player = component;
 	}
 	
