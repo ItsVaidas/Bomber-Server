@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Random;
 
 import javax.swing.Timer;
+
+import Collections.PowerUpCollection;
+
 import java.util.Iterator;
 
 import OSP.ServerSide.Objects.Bomb;
@@ -19,6 +22,7 @@ import OSP.ServerSide.Objects.Player;
 import OSP.ServerSide.Objects.Poison;
 import OSP.ServerSide.Objects.PoisonPowerUpAlgorithm;
 import OSP.ServerSide.Objects.PowerUp;
+import OSP.ServerSide.Objects.PowerUpIterator;
 import OSP.ServerSide.Objects.SpeedPoition;
 import OSP.ServerSide.Objects.SpeedPowerUpAlgorithm;
 import OSP.ServerSide.Objects.Sword;
@@ -33,7 +37,7 @@ public class Game {
 	Lobby lobby;
 	Map map;
 	List<Bomb> bombs;
-	List<PowerUp> powerUps;
+	List<PowerUp> powerUps = new ArrayList<PowerUp>();
 	List<int[]> initialLocations = Arrays.asList(new int[] {1, 1}, new int[] {1, 8}, new int[] {8, 1}, new int[] {8, 8});
 	
 	private static Game gameInstance = null;
@@ -44,7 +48,6 @@ public class Game {
 		this.map = director.createMap(new MapBuilder());
 		
 		bombs = new ArrayList<>();
-		powerUps = new ArrayList<>();
 		
 		int i = 0;
 		for (Player p : lobby.getPlayers()) {
@@ -58,6 +61,14 @@ public class Game {
 		addPowerUps();
 	}
 	
+	private void addPowerUps() {
+		PowerUpIterator powerUpIterator = new PowerUpCollection().createPowerUpIterator();
+		
+		while (powerUpIterator.hasNext()) {
+			this.powerUps.add(powerUpIterator.getNext());
+		}	
+	}
+	
 	public synchronized static Game getGameInstance(Lobby lobby) {
 		if(gameInstance==null) {
 			gameInstance = new Game(lobby);
@@ -67,59 +78,6 @@ public class Game {
 	
 	public void addBomb(String ID, int x, int y) {
 		bombs.add(new Bomb(lobby.getPlayer(ID), new Location(x, y)));
-	}
-	
-	public void addPowerUps() {
-		List<Location> locations = new ArrayList<>();
-		
-		for(int i = 0; i < 2; i++) {
-			Location randomLocation = generateFreeRandomLocation(locations);
-			locations.add(randomLocation);
-			Fruit fruit = new Fruit(randomLocation);
-			fruit.setPowerUpAlgorithm(new HealthPowerUpAlgorithm());
-			this.powerUps.add(fruit);
-		}
-		
-		for(int i = 0; i < 2; i++) {
-			Location randomLocation = generateFreeRandomLocation(locations);
-			locations.add(randomLocation);
-			Poison poison = new Poison(randomLocation);
-			poison.setPowerUpAlgorithm(new PoisonPowerUpAlgorithm());
-			this.powerUps.add(poison);
-		}
-		
-		for(int i = 0; i < 2; i++) {
-			Location randomLocation = generateFreeRandomLocation(locations);
-			locations.add(randomLocation);
-			SpeedPoition poition = new SpeedPoition(randomLocation);
-			poition.setPowerUpAlgorithm(new SpeedPowerUpAlgorithm());
-			this.powerUps.add(poition);
-		}
-		
-		for(int i = 0; i < 2; i++) {
-			Location randomLocation = generateFreeRandomLocation(locations);
-			locations.add(randomLocation);
-			Sword sword = new Sword(randomLocation);
-			sword.setPowerUpAlgorithm(new DamagePowerUpAlgorithm());
-			this.powerUps.add(sword);
-		}
-	}
-	
-	public Location generateFreeRandomLocation(List<Location> locations) {
-		boolean isFound = false;
-		Random r = new Random();
-		Location newLocation = new Location(0, 0);
-		while(!isFound) {
-			int randomPosY = r.nextInt((map.getHeight() - 2) - 2) + 2;
-			int randomPosX = r.nextInt((map.getWidth() - 2) - 2) + 2;
-			Location randomLocation = new Location(randomPosX, randomPosY);
-			if(!locations.contains(randomLocation)) {
-				newLocation = randomLocation;
-				isFound = true;
-			}
-		}
-		
-		return newLocation;
 	}
 
 	public void removeBomb(String ID, int x, int y) {
