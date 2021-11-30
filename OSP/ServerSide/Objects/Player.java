@@ -101,6 +101,7 @@ public class Player {
 	}
 
 	public void revive() {
+		health = 1;
 		isDead = false;
 	}
 
