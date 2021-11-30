@@ -35,7 +35,7 @@ public class Player {
 	
 	public void died() {
 		health--;
-		if(health == 0) {
+		if(health <= 0) {
 			isDead = true;	
 		}
 	}
