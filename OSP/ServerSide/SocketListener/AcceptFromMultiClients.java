@@ -39,6 +39,7 @@ public class AcceptFromMultiClients extends Thread {
 	        observer.subscribe(new MapUpdaterListener());
 	        observer.subscribe(new GameEndListener());
 	        observer.subscribe(new PowerUpListener());
+	        observer.subscribe(new UpdatePowerupsToPlayer()); //16
 	        
 	        int channel = Integer.parseInt(in.readLine());
 	        observer.notify(channel, lobby, out, in, clientSocket);

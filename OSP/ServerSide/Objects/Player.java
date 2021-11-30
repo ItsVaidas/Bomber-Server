@@ -72,8 +72,6 @@ public class Player {
 		return this.damage;
 	}
 	
-	
-	
 	public void removeHealth(int health) {
 		this.health -= health;
 		if(this.health <= 0) {
