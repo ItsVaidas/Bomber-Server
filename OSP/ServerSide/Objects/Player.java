@@ -97,12 +97,16 @@ public class Player {
 	
 	@Override
 	public String toString() {
-		return ID + " " + l.X() + "/" + l.Y() + " " + isDead;
+		return ID + " " + l.X() + "/" + l.Y() + " " + isDead + " " + level;
 	}
 
 	public void revive() {
 		health = 1;
 		isDead = false;
+	}
+
+	public void levelUp() {
+		this.level++;
 	}
 
 }

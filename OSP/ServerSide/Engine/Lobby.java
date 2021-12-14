@@ -33,6 +33,10 @@ public class Lobby {
 			if (i == 1) {
 				game = null;
 				startCountdown();
+				for (Player p : getPlayers()) {
+					if (!p.isDead())
+						p.levelUp();
+				}
 			}
 		});
 		checkForWiner.start();

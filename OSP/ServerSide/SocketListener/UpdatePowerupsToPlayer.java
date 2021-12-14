@@ -20,7 +20,7 @@ public class UpdatePowerupsToPlayer extends EventListener {
 		if(channel == 16) {
 			String ID = in.readLine();
 			Player p = lobby.getPlayer(ID);
-			out.println(p.getHealth()+","+p.getPower()+","+p.getSpeed()+","+p.getDamage());
+			out.println(p.getHealth()+","+p.getPower()+","+p.getSpeed()+","+p.getDamage()+","+p.getLevel());
 		}
 	}
 }

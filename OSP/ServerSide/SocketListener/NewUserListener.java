@@ -9,8 +9,6 @@ import java.util.Random;
 import OSP.ServerSide.Engine.Lobby;
 
 public class NewUserListener extends EventListener {
-	private Random rand = new Random();
-	
 	@Override
 	public void update(
 			int channel,
@@ -25,7 +23,7 @@ public class NewUserListener extends EventListener {
 				return;
 			}
 			int ID = lobby.getPlayers().size() + 1;
-			lobby.addPlayer(String.valueOf(ID), ID == 1 ? 1 : 0);
+			lobby.addPlayer(String.valueOf(ID), 1);
 			out.println(ID);
 			System.out.println("User joined with ID: " + ID + "; IP: " + clientSocket.getInetAddress().getHostAddress());
 		}
