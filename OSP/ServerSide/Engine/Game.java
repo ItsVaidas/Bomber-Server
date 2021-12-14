@@ -43,6 +43,25 @@ public class Game {
 		addPowerUps();
 		checkPowerUps();
 	}
+
+	public void newGame() {
+		
+		Director director = new Director();
+		this.map = director.createMap(new MapBuilder());
+		
+		bombs = new ArrayList<>();
+		
+		int i = 0;
+		for (Player p : lobby.getPlayers()) {
+			int[] xy = initialLocations.get(i++);
+			p.getLocation().setLocation(xy[1], xy[0]);
+			p.revive();
+		}
+		
+		explodeBombs();
+		addPowerUps();
+		checkPowerUps();
+	}
 	
 	public void checkPowerUps() {
 		new Timer(50, (e) -> {			
